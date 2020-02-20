@@ -125,9 +125,7 @@ grid-gap: 20px;
 grid-template-columns: repeat(2,1fr);
 margin: 20px;
 }
-.Recipies > div >em:last-child {
-	font-size: 0.6rem;
-}
+
 .Recipies >div{
 	text-align: justify;
 	padding: 10px;
@@ -179,4 +177,24 @@ margin: 20px;
 	padding: 20px;
 	color: #ff758c;
 	text-align: center;
+}
+@media screen and (max-width: 768px){
+.Recipies{
+display: grid;
+grid-template-columns: 1fr;
+margin: 20px;
+}
+.semiFooter{
+	margin-top: 20px;
+	padding: 30px;
+	background-color: #131817;
+	color: white;
+	text-align: center;
+	font-size: 10px;
+	text-align: justify;
+	}
+
+	.signs{
+	display: none;
+	}
 }
