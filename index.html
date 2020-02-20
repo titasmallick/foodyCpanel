@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>REVIEWS UPLOAD</title>
+	<link rel="shortcut icon" alt="favicon for foodyC." type="image/png" href="icons/icon-01.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-storage.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>firestore</title>
+	<link rel="stylesheet" href="style.css">
+<!-- 	<script src="dynamicInput.js"></script> -->
+</head>
+<body>
+		<!--Header-->
+<a style="text-decoration: none;" href="index.html"><div class="header">
+	<img src="assets/logo.svg" alt="foodyC logo">
+	<div style="font-size: 2rem; text-align: center; color: black;">foodyC.</div>
+	<div style="font-size: 1rem; text-align: right; color: black;">REVIEWS UPLOAD PANNEL FOR ADMINS</div>
+</div></a>
+
+<h3 class="headerPage">Here in this page you are going to upload Data for the Website's <em>Reviews</em> Section. And this Page is strictly restricted for Admins Only.</h3>
+
+
+	<center><form id="imgUpload" class="imageUpload" enctype="multipart/form-data">
+ 	<legend>1. First Choose Photo and Upload the Image</legend>
+ 	<p><b>STEPS</b></p>
+ 	<ol style="display: inline-block; text-align: left;">
+ 		
+ 		<li>Choose your food Photo (Single)</li>
+ 		<li>Hit Upload</li>
+ 		<li>Wait till the photo uploads</li>
+ 		<li>Go to the Second Section</li>
+ 		<li>Fill out all the fields with informations</li>
+ 		<li>Submit Final Data to the database</li>
+ 	</ol>	<br>
+	<input type="file" id="image" accept="image/*"><br>
+	<button type="button" onclick="upload()">Upload</button>
+	<br>
+	<br>
+	<progress id="pBar" value="0" max="100"></progress>
+	<!-- <p id="imgURL"></p> -->
+	</form></center>
+
+	<div class="content">
+	<center>
+		<form id="addReviews">
+			<legend>2. Now Fill Out The Description</legend>
+			<input type="text" name="Name" placeholder="Name of the Resturant" required>
+			<br>
+			<input type="text" name="city" placeholder="Location" required>
+			<br>
+			<textarea type="text" name="about" placeholder="About (Short One Line information about the resturant)" required></textarea>
+			<br>
+			<textarea type="text" name="food" placeholder="Foods you have tasted (e.g, 1. First Food, 2. Second Food, etc.)" required></textarea>
+			<br>
+			<textarea type="text" name="reviews" placeholder="Your Review" required></textarea>
+			<br>
+			<input type="text" name="ratings" placeholder="Ratings (from 1+ to 5+)" required>
+			<br>
+			<input type="text" name="authorName" placeholder="Your Name" required>
+			<br>
+			<input type="email" name="email" placeholder="Your Email" required>
+			<br>
+			<input type="text" name="phoneNumber" placeholder="Phone Number" required>
+			<br>
+
+
+			<textarea style="display: none;" id="demo" name="Timestamp" readonly required></textarea> 
+			<button>FINAL SUBMIT</button>
+			
+		</form>
+	</center>
+
+<!-- 		<ul id="onlyName"></ul> -->
+	</div>
+	<h3 class="headerPage">Preview the changes made by you on the Website's <em>Reviews</em> Section. And this Page is strictly restricted for Admins Only. You can Delete One Entry from here only.</h3>
+<div id="viewReviews" class="Recipies"></div>
+
+<!-- 	<ul id="viewReviewsTwo"></ul> -->
+
+<script src="titas.js"></script>
+<!--Footers-->
+<div class="semiFooter">
+	A real life couple Titas and Sukanya. In quest for good foods. Review, recommendations and visiting new restaurants. Discovering budget foods. Good food what everyone like. Titas and Sukanya in a journey for discovering budget good food in local restaurants. Reviewing them and recommending to others as well.
+	<div class="signs" style="width: 300px;">
+		<div><img src="assets/sigSuk.svg"></div>
+		<div><img src="assets/sigTitas.svg" alt=""></div> 
+	</div>
+	<div class="socialMedia">
+	<i class="fab fa-youtube"></i>
+	<i class="fas fa-users"></i>
+	<i class="fab fa-facebook-square"></i>
+	<i class="fab fa-instagram"></i>
+	<i class="fab fa-whatsapp"></i>
+	<i class="fab fa-google"></i>
+	</div>	
+</div>
+<div class="foot">
+	<div>
+		foodyC.
+	</div>
+	<div style="font-size: 10px; text-align: center;">
+		Titas Mallick <br>
+		Sukanya Saha
+	</div>
+	<div>
+		<center>
+		<img style="width: 15px" src="assets/creativegun.png"></center>
+	</div>
+	<div style="font-size: 10px;">
+		foodycouple0@gmail.com
+	</div>
+</div>
+
+</body>
+</html>

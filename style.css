@@ -1,0 +1,182 @@
+body{
+/*	background: yellow;*/
+ margin: 0;
+font-family: 'Quicksand', sans-serif;
+}
+.header{
+	margin-top: 20px;
+	padding: 20px;
+	margin-left: 50%;
+	transform: translate(-50%, 0);
+	width: 90%;
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	align-items: center;
+	top: 100px;
+	border-radius: 20px;
+	box-shadow: 0px 4px 10px -2px #c6c6c6;
+	border: 2px #fff200 dashed;
+	/*background-color: #fff200;*/
+}
+
+.header >img{
+	height: 10vh;
+}
+
+
+#imgUpload{
+	padding: 20px;
+	margin: 20px;
+	border: 1px cyan dashed;
+	border-radius: 20px;
+
+/*	background: red;*/
+}
+#imgUpload >legend{
+	text-align: center;
+	font-weight: bold;
+}
+#imgUpload>button{
+	width: 40%;
+	margin: 10px;
+	background: white;
+	padding: 13px;
+	border: 1px red dashed;
+}
+#imgUpload >input{
+	background: white;
+	padding: 10px;
+	border: 1px green dashed;
+}
+#contactForm {
+	padding: 20px;
+	margin: 20px;
+	border: 1px cyan dashed;
+	border-radius: 20px;
+}
+#contactForm >input{
+	width: 60%;
+	background: white;
+	padding: 10px;
+	border: 1px red dashed;
+}
+#contactForm >textarea{
+	width: 60%;
+	height: 100px;
+	background: white;
+	padding: 10px;
+	border: 1px red dashed;
+}
+#contactForm >button{
+	background: white;
+	padding: 10px;
+	border: 1px cyan dashed;
+}
+.Btn{
+	background: #ff758c;
+	border-radius: 10px;
+	text-align: center;
+	padding: 10px;
+}
+#addReviews{
+	padding: 20px;
+	margin: 20px;
+	border: 1px cyan dashed;
+	border-radius: 20px;
+
+/*	background: red;*/
+}
+#addReviews >legend{
+	text-align: center;
+	font-weight: bold;
+}
+#addReviews>button{
+	margin: 10px;
+	width: 50%;
+	background: white;
+	padding: 13px;
+	border: 1px red dashed;
+}
+#addReviews >input{
+	margin: 10px;
+	width: 60%;
+	background: white;
+	padding: 10px;
+	border: 1px red dashed;
+}
+#addReviews >textarea{
+	margin: 10px;
+	width: 60%;
+	height: 100px;
+	background: white;
+	padding: 10px;
+	border: 1px red dashed;
+}
+.testimoPics{
+	width: 100%;
+	border-radius: 10px;
+	height: 40vh;
+	object-fit: cover;
+	object-position: center;
+}
+.Recipies{
+display: grid;
+grid-gap: 20px;
+grid-template-columns: repeat(2,1fr);
+margin: 20px;
+}
+.Recipies > div >em:last-child {
+	font-size: 0.6rem;
+}
+.Recipies >div{
+	text-align: justify;
+	padding: 10px;
+	border: 1px red dashed;
+	border-radius: 20px;
+	box-shadow: 0px 4px 10px -2px #c6c6c6;
+}
+.Recipies > div >p:last-child {
+	font-weight: bold;
+	text-align: center;
+	padding: 10px;
+	background: #ff7eb3;
+	border-radius: 20px;
+	box-shadow: 0px 4px 10px -2px #c6c6c6;
+}
+.semiFooter{
+	display: grid;
+	margin-top: 20px;
+	padding-top: 100px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-bottom: 30px;
+	background-color: #131817;
+	color: white;
+	text-align: center;
+	font-size: 1rem;
+	text-align: justify-all;
+}
+
+.signs{
+	margin-top: 10px;
+	margin-left: 50%;
+	transform: translate(-50%,0);
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	grid-gap: 50px;
+}
+
+.foot{
+	background-color: black;
+	padding: 10px;
+	color: white;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	align-items: center;
+
+}
+.headerPage{
+	padding: 20px;
+	color: #ff758c;
+	text-align: center;
+}
