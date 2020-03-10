@@ -89,12 +89,14 @@ var T = localStorage.getItem("VOTING STAT");
 auth.onAuthStateChanged(user => {
     if (user) {
         var accountDetails = document.getElementById("accountDetails");
+        var what = document.referrer;
         accountDetails.innerHTML = user.uid + user.displayName + user.email;
         //-----------------confirming voting code----------------
         const confirmVotingCode = document.querySelector('#enterVotingCode');
         confirmVotingCode.addEventListener('submit', (e) => {
             e.preventDefault();
             db.collection("VotingStat").doc(user.uid).set({
+                    source: what,
                     status: "Opted for Voting",
                     votingCode: confirmVotingCode.code.value,
                 }, {
