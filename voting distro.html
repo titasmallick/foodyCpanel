@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-firestore.js"></script>
+    <title>voting</title>
+</head>
+
+<body>
+    <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+    <p id="accountDetails"></p>
+    <p class="error"></p>
+    <!-- LOGIN INFOS -->
+    <div style="display: block;" class="logged-out">
+        <form id="loginForm">
+            <input type="text" name="email" id="logInEmail" placeholder="email">
+            <input type="text" name="pass" id="logInPass" placeholder="password">
+            <button>Login</button>
+
+        </form>
+    </div>
+    <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+
+    <div style="display: block;" class="logged-out">
+        <form id="signUp">
+            <input type="text" name="email" id="signUpEmail" placeholder="email">
+            <input type="text" name="pass" id="signUpPass" placeholder="password">
+            <button>SignUp</button>
+
+        </form>
+    </div>
+
+    <div style="display: block;" class="logged-in">
+        <form id="logOut">
+            <button>Logout</button>
+        </form>
+    </div>
+    <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+    <h3>test with: titastest@gmail.com, 123456</h3>
+    <div id="votingstatus">
+        <p>---------------------------VOTING ALGORITHM created by Titas Mallick----------------------------------------</p>
+        <form id="enterVotingCode">
+        	<p>Test Voting code: "1234"</p>
+            <input type="text" name="code" id="votingCode" placeholder="votingCode">
+            <button>ENTER VOTING CODE</button>
+        </form>
+        <div id="showvoting"></div>
+    </div>
+    <script>
+        //TITAS's API	
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCJJlIQl-JwiSNkUKFlCQsKOnuojapSNjs",
+            authDomain: "contactform-f97c1.firebaseapp.com",
+            databaseURL: "https://contactform-f97c1.firebaseio.com",
+            projectId: "contactform-f97c1",
+            storageBucket: "contactform-f97c1.appspot.com",
+            messagingSenderId: "201569788456",
+            appId: "1:201569788456:web:3ad8880745388517ed4b1d"
+        };
+
+        //<!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+
+        //AMITS API
+        // var firebaseConfig = {
+        //   apiKey: "AIzaSyABeE_WQIhvoaWc5eLvBbhuz6-jdChl6no",
+        //   authDomain: "data-fcbb2.firebaseapp.com",
+        //   databaseURL: "https://data-fcbb2.firebaseio.com",
+        //   projectId: "data-fcbb2",
+        //   storageBucket: "data-fcbb2.appspot.com",
+        //   messagingSenderId: "61759807849",
+        //   appId: "1:61759807849:web:65f4c9c02d5ac4cd0b9df8",
+        //   measurementId: "G-81SMMDDEEC"
+        // };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <script>
+var T = localStorage.getItem("VOTING STAT");
+
+//---------------------------------------GET FIRESTORE DATA ON AUTH--------------------------------------------------------//
+auth.onAuthStateChanged(user => {
+    if (user) {
+        var accountDetails = document.getElementById("accountDetails");
+        accountDetails.innerHTML = user.uid + user.displayName + user.email;
+        //-----------------confirming voting code----------------
+        const confirmVotingCode = document.querySelector('#enterVotingCode');
+        confirmVotingCode.addEventListener('submit', (e) => {
+            e.preventDefault();
+            db.collection("VotingStat").doc(user.uid).set({
+                    status: "Opted for Voting",
+                    votingCode: confirmVotingCode.code.value,
+                }, {
+                    merge: true
+                })
+                .then(function() {
+                    console.log("VOTING CODE SAVED");
+                    location.reload();
+                })
+                .catch(function(error) {
+                    console.error("VOTING CODE NOT SAVED ", error);
+                });
+
+        });
+        //------------------confirm voting code----------------------
+        var user = firebase.auth().currentUser;
+        db.collection("VotingStat").doc(user.uid).get().then(function(doc) {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+                console.log("IT WILL CHANGE YOUR LIFE", doc.data().status);
+                if (doc.data().status == "USER HAS VOTED") {
+                    console.log("OHHHHH MY GODDDDD!");
+                    document.getElementById("votingstatus").style.background = "red";
+                } else {
+                    document.getElementById("votingstatus").style.background = "green";
+                }
+            } else {
+                document.getElementById("votingstatus").style.background = "cyan";
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+
+
+        db.collection('VOTING').onSnapshot(snapshot => {
+            let changes = snapshot.docChanges();
+            console.log(changes);
+            changes.forEach(change => {
+                if (change.type == 'added') {
+                    showvotes(change.doc);
+
+                }
+            })
+        });
+        if (T != null) {
+            console.log("USER HAS ALREADY VOTED");
+            db.collection("VotingStat").doc(user.uid).set({
+                    uid: firebase.auth().currentUser.uid,
+                    status: "USER HAS VOTED",
+                }, {
+                    merge: true
+                })
+                .then(function() {
+                    console.log("VOTING STAT UPDATED YES");
+                })
+                .catch(function(error) {
+                    console.error("VOTING STAT UPDATE YES ERROR ", error);
+                });
+
+        } else {
+            console.log("USER HAS NOT VOTED YET");
+        }
+        //IF EMAIL VERIFIED DO SOMETHING
+        if (user.emailVerified) {
+            console.log("Linkin Park");
+        }
+        console.log('user logged in', user);
+
+    } else {
+        console.log('user logged out');
+    }
+});
+
+//---------------------------------------SIGNUP--------------------------------------------------------//
+//sign Up new Users
+const error = document.querySelector('.error');
+const signUpForm = document.querySelector('#signUp');
+signUpForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    //user info
+    const email = signUpForm['signUpEmail'].value;
+    const pass = signUpForm['signUpPass'].value;
+
+    //signup the user
+    auth.createUserWithEmailAndPassword(email, pass).then(cred => {
+        console.log(cred);
+        signUpForm.reset();
+        var user = firebase.auth().currentUser;
+
+        user.sendEmailVerification().then(function() {
+            // Email sent.
+            console.log("email verification sent")
+        }).catch(function(error) {
+            // An error happened.
+        });
+        // signUpForm.document.querySelector('.error').innerHTML = "";
+        error.innerHTML = '';
+    }).catch(err => {
+        console.log(err.message)
+        // signUpForm.document.querySelector('.error').innerHTML = err.message;
+        error.innerHTML = err.message + " " + err.code;
+    });
+
+});
+
+//-----------------------------------------LOGOUT------------------------------------------------------//
+//Logout a user
+const logOutForm = document.querySelector('#logOut');
+logOutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    auth.signOut().then(() => {
+        console.log('user logged out');
+    });
+});
+
+//-----------------------------------------LOGIN------------------------------------------------------//
+//Login a User
+const logInForm = document.querySelector('#loginForm');
+logInForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    //get user infos
+    const email = logInForm['logInEmail'].value;
+    const pass = logInForm['logInPass'].value;
+
+    //login user
+    auth.signInWithEmailAndPassword(email, pass).then(cred => {
+        console.log(cred.user);
+        logInForm.reset();
+    });
+});
+
+
+
+
+//--------------------VOTING ALGORITHM--------------------------------------
+
+var reqs_id = 0;
+const showvotesrender = document.querySelector('#showvoting');
+const showvotes = (doc) => {
+
+    let li = document.createElement('li');
+    let name = document.createElement('h2');
+    let votes = document.createElement('h3');
+
+    reqs_id++;
+    votes.setAttribute("id", "votemaster" + reqs_id);
+    li.setAttribute('id', doc.id)
+    name.textContent = " -" + doc.data().Name;
+    votes.textContent = doc.data().Votes;
+
+    li.appendChild(name);
+    li.appendChild(votes);
+    // li.appendChild(email);
+
+
+    showvotesrender.appendChild(li);
+};
+
+
+
+function newLoad() {
+    var one = document.getElementById("votemaster1");
+    var two = document.getElementById("votemaster2");
+    one.onclick = function() {
+        var x = document.getElementById("votemaster1").parentNode.id;
+        var y = document.getElementById("votemaster1").innerHTML;
+        y++;
+        console.log(x);
+        // console.log(y++, "yeah yeah yeha yeah")
+        db.collection("VOTING").doc(x).set({
+                Votes: y++,
+            }, {
+                merge: true
+            })
+            .then(function() {
+                console.log("Document successfully written!");
+                location.reload();
+                localStorage.setItem("VOTING STAT", "VOTED");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+    }
+    two.onclick = function() {
+        var x = document.getElementById("votemaster2").parentNode.id;
+        var y = document.getElementById("votemaster2").innerHTML;
+        y++;
+        console.log(x);
+        // console.log(y++, "yeah yeah yeha yeah")
+        db.collection("VOTING").doc(x).set({
+                Votes: y++,
+            }, {
+                merge: true
+            })
+            .then(function() {
+                console.log("Document successfully written!");
+                localStorage.setItem("VOTING STAT", "VOTED");
+                location.reload();
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+    }
+}
+
+document.addEventListener('readystatechange', event => {
+
+    if (event.target.readyState === "interactive") {
+        console.log("loading...");
+
+
+    }
+
+    if (event.target.readyState === "complete") {
+        console.log("loaded!");
+        setTimeout(newLoad, 4000);
+    }
+});
+
+localStorage.removeItem("VOTING STAT");
+    </script>
+</body>
+
+</html>
+<!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
