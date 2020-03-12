@@ -21,6 +21,8 @@ auth.onAuthStateChanged(user => {
                     merge: true
                 })
                 .then(function() {
+                    var abcdef = localStorage.getItem("source");
+                    localStorage.getItem("source", abcdef);
                     console.log("VOTING CODE SAVED");
                     localStorage.removeItem("source");
                     location.reload();
