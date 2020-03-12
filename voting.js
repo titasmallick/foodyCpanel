@@ -1,11 +1,11 @@
 var T = localStorage.getItem("VOTING STAT");
+const what = localStorage.setItem("source", document.referrer);
+const wtf = localStorage.getItem("source");
 //---------------------------------------GET FIRESTORE DATA ON AUTH--------------------------------------------------------//
 auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById("logoutFormShow").style.display = "block";
         document.getElementById("logInFormClose").style.display = "none";
-        var what = localStorage.setItem("source", document.referrer);
-        var wtf = localStorage.getItem("source");
         var accountDetails = document.getElementById("accountDetails");
         accountDetails.innerHTML = "logged in with " + user.email;
         
