@@ -3,6 +3,10 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=" theme-color" content="#1cefff">
+    <link href="https://fonts.googleapis.com/css?family=Beth+Ellen|Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="voting.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-auth.js"></script>
@@ -11,45 +15,84 @@
 </head>
 
 <body>
+    
     <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
-    <p id="accountDetails"></p>
+    <p class="headerT">Polling</p>
+    <em><p style="text-align: center; color: white;" id="accountDetails"></p></em>
     <p class="error"></p>
-    <!-- LOGIN INFOS -->
-    <div style="display: block;" class="logged-out">
+    <p class="accOButton" onclick="openAccset()">Account Setting</p>
+    <div id="accountSection" class="accountSect" style="display: none;">
+        <div id="logInFormClose" style="display: block;" class="forms logged-out">
         <form id="loginForm">
-            <input type="text" name="email" id="logInEmail" placeholder="email">
-            <input type="text" name="pass" id="logInPass" placeholder="password">
+            <input type="text" name="email" id="logInEmail" placeholder="Email">
+            <br>
+            <input type="text" name="pass" id="logInPass" placeholder="Password">
+            <br>
             <button>Login</button>
 
-        </form>
-    </div>
-    <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+            <p onclick="opensignUpForm()" style="font-size: 0.8rem"><em>Don't have account? Sign Up</em></p>
 
-    <div style="display: block;" class="logged-out">
+        </form>
+        </div>
+
+        <div id="signUpFormOpen" style="display: none;" class="forms logged-out">
         <form id="signUp">
-            <input type="text" name="email" id="signUpEmail" placeholder="email">
-            <input type="text" name="pass" id="signUpPass" placeholder="password">
+            <input type="text" name="email" id="signUpEmail" placeholder="Email">
+            <br>
+            <input type="text" name="pass" id="signUpPass" placeholder="Password">
+            <br>
             <button>SignUp</button>
-
+            <p onclick="openlogInForm()" style="font-size: 0.8rem"><em>Have account? Log in</em></p>
         </form>
-    </div>
+        </div>
 
-    <div style="display: block;" class="logged-in">
+        <div id="logoutFormShow" style="display: none;" class="forms">
         <form id="logOut">
             <button>Logout</button>
         </form>
+        </div>
+        <p style="font-size: 0.8rem; text-align:  center; "><em>For details visit Account Page</em></p>
     </div>
+
+    <p style="text-align: center;" id="showemailVerifictaiuonStatus"></p>
+    <!-- LOGIN INFOS -->
+    
     <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
-    <h3>test with: titastest@gmail.com, 123456</h3>
+
+    
+
+    
+    <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+    <div style="display: none;" id="showToVerifiedUsersOnly">
+        <div class="votingDescription">
+    <h4>foodyC. Voting </h4>
+    <p> This Polling session is for ______. You must follow some rules to take part in the Polling. You must have an verified foodyC. Account. If you don't have one please create one and verify before you procceed. You must enter the valid voting key here that is published in the group to take part in the polling. You can only vote Once. And You must visit this link from facebook. Otherwise you can't vote.</p>
+        </div>
+
     <div id="votingstatus">
-        <p>---------------------------VOTING ALGORITHM created by Titas Mallick----------------------------------------</p>
+        <h4 style="text-align: center;">Polling</h4>
+        <p style="text-align: center;" id="pollingstatus"></p>
+        <p style="text-align: center;" id="voteError"></p>
+        
         <form id="enterVotingCode">
-        	<p>Test Voting code: "1234"</p>
-            <input type="text" name="code" id="votingCode" placeholder="votingCode">
-            <button>ENTER VOTING CODE</button>
+            <input type="text" name="code" id="votingCode" placeholder="Enter Voting Code">
+            <br>
+            <button id="votingCodeButton">Submit</button>
         </form>
-        <div id="showvoting"></div>
+        
+        <div id="showvoting">
+            <div id="votingTitle" class="eachcanddata">
+            <p>Name</p>
+            <p>Votes</p>
+            <p>Poll</p>
+            </div>
+        </div>
+        
     </div>
+
+    </div>
+
+    <p class="footerss">foodyC | Algorithm copyright Titas Mallick, 2020</p>
     <script>
         //TITAS's API	
         // Your web app's Firebase configuration
@@ -82,247 +125,21 @@
         const db = firebase.firestore();
     </script>
 
-    <script>
-var T = localStorage.getItem("VOTING STAT");
-
-//---------------------------------------GET FIRESTORE DATA ON AUTH--------------------------------------------------------//
-auth.onAuthStateChanged(user => {
-    if (user) {
-        var accountDetails = document.getElementById("accountDetails");
-        var what = document.referrer;
-        accountDetails.innerHTML = user.uid + user.displayName + user.email;
-        //-----------------confirming voting code----------------
-        const confirmVotingCode = document.querySelector('#enterVotingCode');
-        confirmVotingCode.addEventListener('submit', (e) => {
-            e.preventDefault();
-            db.collection("VotingStat").doc(user.uid).set({
-                    source: what,
-                    status: "Opted for Voting",
-                    votingCode: confirmVotingCode.code.value,
-                }, {
-                    merge: true
-                })
-                .then(function() {
-                    console.log("VOTING CODE SAVED");
-                    location.reload();
-                })
-                .catch(function(error) {
-                    console.error("VOTING CODE NOT SAVED ", error);
-                });
-
-        });
-        //------------------confirm voting code----------------------
-        var user = firebase.auth().currentUser;
-        db.collection("VotingStat").doc(user.uid).get().then(function(doc) {
-            if (doc.exists) {
-                console.log("Document data:", doc.data());
-                console.log("IT WILL CHANGE YOUR LIFE", doc.data().status);
-                if (doc.data().status == "USER HAS VOTED") {
-                    console.log("OHHHHH MY GODDDDD!");
-                    document.getElementById("votingstatus").style.background = "red";
-                } else {
-                    document.getElementById("votingstatus").style.background = "green";
-                }
-            } else {
-                document.getElementById("votingstatus").style.background = "cyan";
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
-
-
-        db.collection('VOTING').onSnapshot(snapshot => {
-            let changes = snapshot.docChanges();
-            console.log(changes);
-            changes.forEach(change => {
-                if (change.type == 'added') {
-                    showvotes(change.doc);
-
-                }
-            })
-        });
-        if (T != null) {
-            console.log("USER HAS ALREADY VOTED");
-            db.collection("VotingStat").doc(user.uid).set({
-                    uid: firebase.auth().currentUser.uid,
-                    status: "USER HAS VOTED",
-                }, {
-                    merge: true
-                })
-                .then(function() {
-                    console.log("VOTING STAT UPDATED YES");
-                })
-                .catch(function(error) {
-                    console.error("VOTING STAT UPDATE YES ERROR ", error);
-                });
-
-        } else {
-            console.log("USER HAS NOT VOTED YET");
-        }
-        //IF EMAIL VERIFIED DO SOMETHING
-        if (user.emailVerified) {
-            console.log("Linkin Park");
-        }
-        console.log('user logged in', user);
-
-    } else {
-        console.log('user logged out');
-    }
-});
-
-//---------------------------------------SIGNUP--------------------------------------------------------//
-//sign Up new Users
-const error = document.querySelector('.error');
-const signUpForm = document.querySelector('#signUp');
-signUpForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    //user info
-    const email = signUpForm['signUpEmail'].value;
-    const pass = signUpForm['signUpPass'].value;
-
-    //signup the user
-    auth.createUserWithEmailAndPassword(email, pass).then(cred => {
-        console.log(cred);
-        signUpForm.reset();
-        var user = firebase.auth().currentUser;
-
-        user.sendEmailVerification().then(function() {
-            // Email sent.
-            console.log("email verification sent")
-        }).catch(function(error) {
-            // An error happened.
-        });
-        // signUpForm.document.querySelector('.error').innerHTML = "";
-        error.innerHTML = '';
-    }).catch(err => {
-        console.log(err.message)
-        // signUpForm.document.querySelector('.error').innerHTML = err.message;
-        error.innerHTML = err.message + " " + err.code;
-    });
-
-});
-
-//-----------------------------------------LOGOUT------------------------------------------------------//
-//Logout a user
-const logOutForm = document.querySelector('#logOut');
-logOutForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    auth.signOut().then(() => {
-        console.log('user logged out');
-    });
-});
-
-//-----------------------------------------LOGIN------------------------------------------------------//
-//Login a User
-const logInForm = document.querySelector('#loginForm');
-logInForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    //get user infos
-    const email = logInForm['logInEmail'].value;
-    const pass = logInForm['logInPass'].value;
-
-    //login user
-    auth.signInWithEmailAndPassword(email, pass).then(cred => {
-        console.log(cred.user);
-        logInForm.reset();
-    });
-});
-
-
-
-
-//--------------------VOTING ALGORITHM--------------------------------------
-
-var reqs_id = 0;
-const showvotesrender = document.querySelector('#showvoting');
-const showvotes = (doc) => {
-
-    let li = document.createElement('li');
-    let name = document.createElement('h2');
-    let votes = document.createElement('h3');
-
-    reqs_id++;
-    votes.setAttribute("id", "votemaster" + reqs_id);
-    li.setAttribute('id', doc.id)
-    name.textContent = " -" + doc.data().Name;
-    votes.textContent = doc.data().Votes;
-
-    li.appendChild(name);
-    li.appendChild(votes);
-    // li.appendChild(email);
-
-
-    showvotesrender.appendChild(li);
-};
-
-
-
-function newLoad() {
-    var one = document.getElementById("votemaster1");
-    var two = document.getElementById("votemaster2");
-    one.onclick = function() {
-        var x = document.getElementById("votemaster1").parentNode.id;
-        var y = document.getElementById("votemaster1").innerHTML;
-        y++;
-        console.log(x);
-        // console.log(y++, "yeah yeah yeha yeah")
-        db.collection("VOTING").doc(x).set({
-                Votes: y++,
-            }, {
-                merge: true
-            })
-            .then(function() {
-                console.log("Document successfully written!");
-                location.reload();
-                localStorage.setItem("VOTING STAT", "VOTED");
-            })
-            .catch(function(error) {
-                console.error("Error writing document: ", error);
-            });
-    }
-    two.onclick = function() {
-        var x = document.getElementById("votemaster2").parentNode.id;
-        var y = document.getElementById("votemaster2").innerHTML;
-        y++;
-        console.log(x);
-        // console.log(y++, "yeah yeah yeha yeah")
-        db.collection("VOTING").doc(x).set({
-                Votes: y++,
-            }, {
-                merge: true
-            })
-            .then(function() {
-                console.log("Document successfully written!");
-                localStorage.setItem("VOTING STAT", "VOTED");
-                location.reload();
-            })
-            .catch(function(error) {
-                console.error("Error writing document: ", error);
-            });
-    }
-}
-
-document.addEventListener('readystatechange', event => {
-
-    if (event.target.readyState === "interactive") {
-        console.log("loading...");
-
-
-    }
-
-    if (event.target.readyState === "complete") {
-        console.log("loaded!");
-        setTimeout(newLoad, 4000);
-    }
-});
-
-localStorage.removeItem("VOTING STAT");
-    </script>
+    <script src="voting.js"></script>
 </body>
 
 </html>
 <!-- THIS ALGORITHM IS CREATED BY MR. TITAS MALLICK -->
+
+
+
+<!-- FIRESTORE RULES
+    match /VOTING/{document=**} {
+    allow  read: if request.auth.uid !=null;
+    allow write: if get(/databases/$(database)/documents/VotingStat/$(request.auth.uid)).data.votingCode == "1234" && get(/databases/$(database)/documents/VotingStat/$(request.auth.uid)).data.status != "USER HAS VOTED" && (get(/databases/$(database)/documents/VotingStat/$(request.auth.uid)).data.source == "android-app://m.facebook.com" || get(/databases/$(database)/documents/VotingStat/$(request.auth.uid)).data.source == "https://www.facebook.com/" || get(/databases/$(database)/documents/VotingStat/$(request.auth.uid)).data.source == "https://m.facebook.com/");
+    } 
+    match /VotingStat/{VotingStatId} {
+    // allow  read, write;
+    allow read, write: if request.auth.uid  == VotingStatId;
+    }  
+    -->

@@ -1,0 +1,129 @@
+html, body{
+	background: linear-gradient(-90deg, #74ebd5, #acb6e5);
+	font-family: 'Roboto', sans-serif;
+}
+.headerT{
+	font-family: 'Beth Ellen', cursive;
+	font-size: 4rem;
+	color: white;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.accountSect{
+	background: rgba(255, 255, 255, 0.8);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px -2px black;
+}
+.forms{
+	margin: 10px;
+}
+.forms >form {
+	text-align: center;
+}
+.forms >form >input{
+	padding: 5px;
+	margin-bottom: 5px;
+	background: white;
+	width: 90%;
+}
+.forms >form >button{
+	padding: 8px;
+	margin-bottom: 5px;
+	background: #4286f5;
+	color: white;
+	font-weight: bold;
+	width: 50%;
+	border: none;
+	border-radius: 5px;
+}
+.accOButton{
+	margin: auto;
+	text-align: center;
+	padding: 8px;
+	margin-bottom: 5px;
+	background: #4286f5;
+	color: white;
+	font-weight: bold;
+	width: 50%;
+	border: none;
+	border-radius: 5px;
+}
+.votingDescription{
+	background: rgba(255, 255, 255, 0.8);
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px -2px #fcfcfc;
+	margin: 20px;
+	text-align: justify;
+}
+.votingDescription >h4{
+	text-align: center;
+}
+#votingstatus{
+	background: rgba(255, 255, 255, 0.8);
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px -2px #fcfcfc;
+}
+#votingCode{
+	padding: 5px;
+	margin-bottom: 5px;
+	background: white;
+	width: 90%;
+}
+#votingCodeButton{
+	margin-left: 50%;
+	transform: translate(-50%,0);
+	text-align: center;
+	padding: 8px;
+	margin-bottom: 5px;
+	background: #4286f5;
+	color: white;
+	font-weight: bold;
+	width: 50%;
+	border: none;
+	border-radius: 5px;
+}
+.eachcanddata{
+	display: grid;
+	grid-gap: 20px;
+	border-bottom: 1px dashed red;
+	grid-template-columns: repeat(3, auto);
+	align-items: center;
+	justify-content: end;	
+}
+.eachcanddata >h3{
+	padding: 10px;
+	cursor: pointer;
+	background: #4286f5;
+	color: white;
+	border-radius: 5px;
+}
+.votingTitle{
+	display: grid;
+	grid-gap: 20px;
+	border-bottom: 1px dashed red;
+	grid-template-columns: repeat(3, auto);
+	align-items: center;
+	justify-content: end;
+}
+.footerss{
+	text-align: center;
+	margin-bottom: 0px;
+	font-style: italic;
+	font-size: 0.8rem;
+
+}
+html, body{
+		padding-left: 100px;
+		padding-right: 100px;
+	}
+@media screen and (max-width: 768px) {
+	html, body{
+		padding: 5px;
+		margin: 0px;
+	}
+}
